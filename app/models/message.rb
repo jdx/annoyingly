@@ -21,6 +21,6 @@ class Message < ActiveRecord::Base
   end
 
   def notify_employee
-    TicketMailer.notify_employee(self, User.random)
+    TicketMailer.notify_employee(self, User.random).deliver
   end
 end
