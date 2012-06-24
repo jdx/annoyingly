@@ -3,7 +3,11 @@ class EmailsController < ApplicationController
   before_filter :verify_signature
 
   def create
-    message = Message.new(params[:message])
+    message = Message.new
+    message.from = params[:from]
+    message.subject = params[:subject]
+    message.html = params[:html]
+    message.plain = params[:plain]
     message.save!
     render nothing: true, status: 200
   end
@@ -11,8 +15,9 @@ class EmailsController < ApplicationController
   private
 
   def verify_signature
-    provided = request.request_parameters.delete(:signature)
-    signature = Digest::MD5.hexdigest(flatten_params(request.request_parameters).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
+    sig_params = request.request_parameters.clone
+    provided = sig_params.delete(:signature)
+    signature = Digest::MD5.hexdigest(flatten_params(sig_params).sort.map{|k,v| v}.join + ENV['CLOUDMAILIN_SECRET'])
 
     if provided != signature
       render :text => "Message signature fail #{provided} != #{signature}", :status => 403, :content_type => Mime::TEXT.to_s
