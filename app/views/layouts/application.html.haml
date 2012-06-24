@@ -1,14 +1,40 @@
 !!!
 %html
   %head
-    %title Annoyingly
-    = stylesheet_link_tag    "application", :media => "all"
+    %title annoying.ly
+    = stylesheet_link_tag    "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
 %body
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        = link_to "annoying.ly", root_path, class: 'brand'
+        - unless current_user
+          %ul.nav
+            %li= link_to "Login", login_path
+            %li= link_to "Register", register_path
+        - if current_user
+          %ul.nav
+            %li= link_to "Tickets", tickets_path
+          .btn-group.pull-right
+            %a.btn.dropdown-toggle{ href: '#', data: { toggle: :dropdown } }
+              %img{ src: current_user.avatar_url(16) }
+              = current_user
+              %span.caret
+            %ul.dropdown-menu
+              %li= link_to "Logout", logout_path
+  - if flash[:alert]
+    .container
+      .alert.alert-error= flash[:alert]
+  - if flash[:notice]
+    .container
+      .alert.alert-info= flash[:notice]
+  - if flash[:warning]
+    .container
+      .alert.alert-warning= flash[:warning]
+  - if flash[:success]
+    .container
+      .alert.alert-success= flash[:success]
   .container
-    - if current_user
-      = current_user.email
-    - else
-      <a href="/users/new">Register</a>
     = yield

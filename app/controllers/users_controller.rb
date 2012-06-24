@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+
+  skip_before_filter :authenticate
+
   def new
-    return render :text => params[:query] if params[:query].present?
     @user = User.new
   end
 

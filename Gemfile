@@ -8,10 +8,12 @@ gem 'haml'
 gem 'simple_form'
 gem 'rabl'
 
-group :development do
+group :development, :test do
   gem 'sqlite3'
   gem 'sextant'
   gem 'quiet_assets'
+  gem 'rspec-rails'
+  gem 'simplecov', require: false
 end
 
 group :assets do
