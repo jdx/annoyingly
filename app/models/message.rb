@@ -21,7 +21,7 @@ class Message < ActiveRecord::Base
   private
 
   def create_ticket
-    self.ticket = Ticket.new
+    self.ticket = Ticket.create!
   end
 
   def notify_employee
