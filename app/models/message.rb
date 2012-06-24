@@ -14,6 +14,10 @@ class Message < ActiveRecord::Base
     subject
   end
 
+  def code
+    ticket.code
+  end
+
   private
 
   def create_ticket

@@ -1,10 +1,12 @@
-You're received a support ticket on annoying.ly:
-
+You've received a support ticket on annoying.ly:
+<br /><br /><br />
 ================================================
-
-<%= @message.html %>
-
+<br /><br /><br />
+<%= @message.html.html_safe %>
+<br /><br /><br />
 ================================================
-
+<br /><br /><br />
 <%= link_to "TODO: Mark as resolved", '' %>
 <%= link_to "TODO: Send to someone else", '' %>
+
+<input type="hidden" name="code" value="<%= @message.code %>" />
